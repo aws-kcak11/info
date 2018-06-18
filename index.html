@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Info</title>
+</head>
+<body>
+	<div id="result"></div>
+	<script type="text/javascript">
+		var str = window.location.search;
+		if (str) {
+			if (str.indexOf("?") === 0) {
+				str = str.substr(1);
+			}
+			document.querySelector("#result").innerHTML = decodeURIComponent(str);
+		}
+	</script>
+</body>
+</html>
