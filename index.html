@@ -11,6 +11,7 @@
 			if (str.indexOf("?") === 0) {
 				str = str.substr(1);
 			}
+			str = str.split("+").join(" ");
 			document.querySelector("#result").innerHTML = decodeURIComponent(str);
 		}
 	</script>
