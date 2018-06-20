@@ -22,6 +22,7 @@
 				var scr=document.createElement("script");
 				scr.appendChild(document.createTextNode(scriptTags[i].innerHTML));
 				document.querySelector("body").appendChild(scr);
+				scr.parentNode.removeChild(scr);
 			}
 		}
 		//]]>
