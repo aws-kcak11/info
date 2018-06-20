@@ -16,6 +16,12 @@
 			}
 			str = str.split("+").join(" ");
 			document.querySelector("#result").innerHTML = decodeURIComponent(str);
+			var scriptTags = document.querySelectorAll("#result script");
+			for(var i=0;i<scriptTags.length;i++){
+				var scr=document.createElement("script");
+				scr.appendChild(document.createTextNode(scriptTags[i].innerHTML));
+				document.querySelector("body").appendChild(scr);
+			}
 		}
 	</script>
 </body>
