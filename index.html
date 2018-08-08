@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Info</title>
-<link href='//www.kcak11.com/favicon.ico' rel='icon' type='image/x-icon' />
-<meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0' name='viewport' />
-<meta name="theme-color" content="#6593E4" />
+  <title>Info</title>
+  <link href='//www.kcak11.com/favicon.ico' rel='icon' type='image/x-icon' />
+  <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0' name='viewport' />
+  <meta name="theme-color" content="#6593E4" />
 </head>
+
 <body>
-	<div id="result"></div>
-	<script type="text/javascript">
-		//<![CDATA[
-		var str = window.location.search;
-		if (str) {
-			if (str.indexOf("?") === 0) {
-				str = str.substr(1);
-			}
-			str = str.split("+").join(" ");
-			document.querySelector("#result").innerHTML = decodeURIComponent(str);
-			var scriptTags = document.querySelectorAll("#result script");
-			for(var i=0;i<scriptTags.length;i++){
-				var scr=document.createElement("script");
-				scr.appendChild(document.createTextNode(scriptTags[i].innerHTML));
-				document.querySelector("body").appendChild(scr);
-				scr.parentNode.removeChild(scr);
-			}
-		}
-		//]]>
-	</script>
+  <div id="result"></div>
+  <script type="text/javascript">
+    //<![CDATA[
+    var str = window.location.search;
+    if (str) {
+      if (str.indexOf("?") === 0) {
+        str = str.substr(1);
+      }
+      str = str.split("+").join(" ");
+      document.querySelector("#result").innerHTML = decodeURIComponent(str);
+      var scriptTags = document.querySelectorAll("#result script");
+      for (var i = 0; i < scriptTags.length; i++) {
+        var scr = document.createElement("script");
+        if (scriptTags[i].src) {
+          var attrs = scriptTags[i].attributes;
+          for (var key in attrs) {
+            if (attrs[key].localName) {
+              scr.setAttribute(attrs[key].localName, scriptTags[i].getAttribute(attrs[key].localName));
+            }
+          }
+        } else {
+          scr.appendChild(document.createTextNode(scriptTags[i].innerHTML));
+        }
+        document.querySelector("body").appendChild(scr);
+        scr.parentNode.removeChild(scr);
+      }
+    }
+    //]]>
+  </script>
 </body>
+
 </html>
