@@ -18,7 +18,7 @@
             str = str.substr(1);
          }
          if (str.indexOf(btoa("kcak11")) === 0) {
-            document.querySelector("#result").innerHTML = atob(str.split(btoa("kcak11"))[1]);
+            document.querySelector("#result").innerHTML = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
          } else {
             str = str.split("+").join(" ");
             document.querySelector("#result").innerHTML = decodeURIComponent(str);
