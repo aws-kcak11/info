@@ -12,7 +12,8 @@
    <div id="result"></div>
    <script type="text/javascript">
       //<![CDATA[
-      var str = window.location.search, info;
+      var str = window.location.search,
+         info;
       if (str) {
          if (str.indexOf("?") === 0) {
             str = str.substr(1);
@@ -23,32 +24,13 @@
             str = str.split("+").join(" ");
             info = decodeURIComponent(str);
          }
-         document.open("text/html","replace");
+         document.open("text/html", "replace");
          document.write(info);
          document.close();
-         /*
-         document.querySelector("#result").innerHTML = info;
-         var scriptTags = document.querySelectorAll("#result script");
-         for (var i = 0; i < scriptTags.length; i++) {
-            var scr = document.createElement("script");
-            if (scriptTags[i].src) {
-               var attrs = scriptTags[i].attributes;
-               for (var key in attrs) {
-                  if (attrs[key].localName) {
-                     scr.setAttribute(attrs[key].localName, scriptTags[i].getAttribute(attrs[key].localName));
-                  }
-               }
-            } else {
-               scr.appendChild(document.createTextNode(scriptTags[i].innerHTML));
-            }
-            document.querySelector("body").appendChild(scr);
-            scr.parentNode.removeChild(scr);
-         }
-         */
       }
       //]]>
    </script>
 </body>
 
 </html>
-<!-- vTag:0MDQ5NzMwNDQyNz4MC4wOkDg5NzgyMTEwNTk4MjQ3MzAuMTY5MzA0NDg1ODA2Njg0MTAuMDU3NzExMzYzMjY0NjY4ND -->
+<!-- vTag:0MDQ5NzMwNDQyNz4MC4wOkDg5NzgyMTEKwNTk4MjQ3MzAuMTY5MzA0NDg1ODA2Njg0MTAuMDU3NzExMzYzMjY0NjY4ND -->
