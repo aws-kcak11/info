@@ -66,79 +66,87 @@
    <script type="text/javascript">
       //<![CDATA[
       (function() {
-         var str = window.location.search,
-            info, renderPage = true,
-            bdy = document.querySelector("body");
-         var featureCheck = function() {
-            if (!window.btoa || !window.atob || !("btoa" in window) || !("atob" in window) || !("".trim)) {
-               alert("Please upgrade your browser for viewing this page.");
-               return false;
-            }
-            return true;
-         };
-         var renderPageContents = function() {
-            if (str.indexOf(btoa("kcak11")) === 0) {
-               if (featureCheck()) {
-                  info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
-               } else {
-                  renderPage = false;
-               }
-            } else {
-               str = str.split("+").join(" ");
-               info = decodeURIComponent(str);
-            }
-            if (renderPage) {
-               document.open("text/html", "replace");
-               document.write(info);
-               document.close();
-            }
-         };
-         var handlePageGeneration = function() {
-            if (!featureCheck()) {
-               return;
-            }
-            var data = document.querySelector(".creator .userInput").value;
-            if (!data) {
-               alert("Please input the data.");
-               return;
-            }
-            var pathname = window.location.pathname;
-            var suffix = "";
-            if (pathname.indexOf(".html") < 0 && pathname.charAt(pathname.length - 1) !== "/") {
-               suffix = "/";
-            }
-            var linkData = btoa("kcak11") + btoa(data);
-            var linkHref = window.location.protocol + "//" + window.location.host + pathname + suffix + "?" + encodeURIComponent(linkData);
-            var link = document.createElement("a");
-            link.className = "generatedPage";
-            link.innerHTML = "View Generated Page";
-            link.setAttribute("target", "_blank");
-            link.setAttribute("href", linkHref);
-            document.querySelector(".creator").appendChild(link);
-         };
-         if (str) {
-            if (str.indexOf("?") === 0) {
-               str = str.substr(1);
-            }
-            if (str === "create") {
-               var creator = document.createElement("div");
-               creator.className = "creator";
-               bdy.appendChild(creator);
-               var hdr = document.createElement("h1");
-               hdr.innerHTML = "Dynamic Page Creator";
-               creator.appendChild(hdr);
-               var inp = document.createElement("textarea");
-               inp.className = "userInput";
-               creator.appendChild(inp);
-               var cta = document.createElement("button");
-               cta.className = "createPageCTA";
-               cta.innerHTML = "Create Dynamic Page";
-               cta.onclick = handlePageGeneration;
-               creator.appendChild(cta);
-            } else {
-               renderPageContents(str);
-            }
-         }
+          var str = window.location.search, info, renderPage = true, bdy = document.querySelector("body");
+          var featureCheck = function() {
+              if (!window.btoa || !window.atob || !("btoa"in window) || !("atob"in window) || !("".trim)) {
+                  alert("Please upgrade your browser for viewing this page.");
+                  return false;
+              }
+              return true;
+          };
+          var renderPageContents = function() {
+              if (str.indexOf(btoa("kcak11")) === 0) {
+                  if (featureCheck()) {
+                      info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
+                  } else {
+                      renderPage = false;
+                  }
+              } else {
+                  str = str.split("+").join(" ");
+                  info = decodeURIComponent(str);
+              }
+              if (renderPage) {
+                  if (window.location.hash === "#edit") {
+                      renderPageCreator(info);
+                  } else {
+                      document.open("text/html", "replace");
+                      document.write(info);
+                      document.close();
+                  }
+              }
+          };
+          var handlePageGeneration = function() {
+              if (!featureCheck()) {
+                  return;
+              }
+              var data = document.querySelector(".creator .userInput").value;
+              if (!data) {
+                  alert("Please input the data.");
+                  return;
+              }
+              var pathname = window.location.pathname;
+              var suffix = "";
+              if (pathname.indexOf(".html") < 0 && pathname.charAt(pathname.length - 1) !== "/") {
+                  suffix = "/";
+              }
+              var linkData = btoa("kcak11") + btoa(data);
+              var linkHref = window.location.protocol + "//" + window.location.host + pathname + suffix + "?" + encodeURIComponent(linkData);
+              var link = document.createElement("a");
+              link.className = "generatedPage";
+              link.innerHTML = "View Generated Page";
+              link.setAttribute("target", "_blank");
+              link.setAttribute("href", linkHref);
+              document.querySelector(".creator").appendChild(link);
+          };
+          var renderPageCreator = function(info) {
+              var creator = document.createElement("div");
+              creator.className = "creator";
+              bdy.appendChild(creator);
+              var hdr = document.createElement("h1");
+              hdr.innerHTML = "Dynamic Page Creator";
+              creator.appendChild(hdr);
+              var inp = document.createElement("textarea");
+              inp.className = "userInput";
+              if (info) {
+                  inp.value = info;
+              }
+              creator.appendChild(inp);
+              var cta = document.createElement("button");
+              cta.className = "createPageCTA";
+              cta.innerHTML = "Create Dynamic Page";
+              cta.onclick = handlePageGeneration;
+              creator.appendChild(cta);
+          };
+          if (str) {
+              if (str.indexOf("?") === 0) {
+                  str = str.substr(1);
+              }
+              if (str === "create") {
+                  renderPageCreator();
+              } else {
+                  renderPageContents(str);
+              }
+          }
       }());
       //]]>
    </script>
