@@ -12,22 +12,24 @@
    <div id="result"></div>
    <script type="text/javascript">
       //<![CDATA[
-      var str = window.location.search,
-         info;
-      if (str) {
-         if (str.indexOf("?") === 0) {
-            str = str.substr(1);
+      (function() {
+         var str = window.location.search,
+            info;
+         if (str) {
+            if (str.indexOf("?") === 0) {
+               str = str.substr(1);
+            }
+            if (str.indexOf(btoa("kcak11")) === 0) {
+               info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
+            } else {
+               str = str.split("+").join(" ");
+               info = decodeURIComponent(str);
+            }
+            document.open("text/html", "replace");
+            document.write(info);
+            document.close();
          }
-         if (str.indexOf(btoa("kcak11")) === 0) {
-            info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
-         } else {
-            str = str.split("+").join(" ");
-            info = decodeURIComponent(str);
-         }
-         document.open("text/html", "replace");
-         document.write(info);
-         document.close();
-      }
+      }());
       //]]>
    </script>
 </body>
