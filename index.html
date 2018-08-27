@@ -13,22 +13,34 @@
    <script type="text/javascript">
       //<![CDATA[
       (function() {
-         var str = window.location.search,
-            info;
-         if (str) {
-            if (str.indexOf("?") === 0) {
-               str = str.substr(1);
-            }
-            if (str.indexOf(btoa("kcak11")) === 0) {
-               info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
-            } else {
-               str = str.split("+").join(" ");
-               info = decodeURIComponent(str);
-            }
-            document.open("text/html", "replace");
-            document.write(info);
-            document.close();
-         }
+          var str = window.location.search, info, renderPage = true;
+          var featureCheck = function() {
+              if (!window.btoa || !window.atob || !("btoa"in window) || !("atob"in window) || !("".trim)) {
+                  alert("Please upgrade your browser for viewing this page.");
+                  return false;
+              }
+              return true;
+          };
+          if (str) {
+              if (str.indexOf("?") === 0) {
+                  str = str.substr(1);
+              }
+              if (str.indexOf(btoa("kcak11")) === 0) {
+                  if (featureCheck()) {
+                      info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
+                  } else {
+                      renderPage = false;
+                  }
+              } else {
+                  str = str.split("+").join(" ");
+                  info = decodeURIComponent(str);
+              }
+              if (renderPage) {
+                  document.open("text/html", "replace");
+                  document.write(info);
+                  document.close();
+              }
+          }
       }());
       //]]>
    </script>
