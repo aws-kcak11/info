@@ -6,6 +6,59 @@
    <link href='//www.kcak11.com/favicon.ico' rel='icon' type='image/x-icon' />
    <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0' name='viewport' />
    <meta name="theme-color" content="#6593E4" />
+   <style type="text/css">
+      .creator,
+      .creator * {
+         font-family: Verdana;
+      }
+
+      .creator {
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         min-height: 400px;
+      }
+
+      .creator h1 {
+         position: absolute;
+         left: 20px;
+      }
+
+      .creator .userInput {
+         position: absolute;
+         top: 80px;
+         left: 20px;
+         width: 968px;
+         height: 484px;
+         border: 2px solid #000;
+         padding: 10px;
+         overflow: auto;
+         font-size: 16px;
+         resize: none;
+         outline: none;
+      }
+
+      .creator .createPageCTA {
+         position: absolute;
+         left: 20px;
+         top: 614px;
+         background-color: blue;
+         color: #fff;
+         border: 2px solid #000;
+         outline: none;
+         padding: 10px;
+         cursor: pointer;
+      }
+
+      .creator .generatedPage {
+         position: absolute;
+         top: 680px;
+         left: 20px;
+         text-decoration: none;
+      }
+   </style>
 </head>
 
 <body>
@@ -13,34 +66,75 @@
    <script type="text/javascript">
       //<![CDATA[
       (function() {
-          var str = window.location.search, info, renderPage = true;
-          var featureCheck = function() {
-              if (!window.btoa || !window.atob || !("btoa"in window) || !("atob"in window) || !("".trim)) {
-                  alert("Please upgrade your browser for viewing this page.");
-                  return false;
-              }
-              return true;
-          };
-          if (str) {
-              if (str.indexOf("?") === 0) {
-                  str = str.substr(1);
-              }
-              if (str.indexOf(btoa("kcak11")) === 0) {
-                  if (featureCheck()) {
-                      info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
-                  } else {
-                      renderPage = false;
-                  }
-              } else {
-                  str = str.split("+").join(" ");
-                  info = decodeURIComponent(str);
-              }
-              if (renderPage) {
-                  document.open("text/html", "replace");
-                  document.write(info);
-                  document.close();
-              }
-          }
+         var str = window.location.search,
+            info, renderPage = true,
+            bdy = document.querySelector("body");
+         var featureCheck = function() {
+            if (!window.btoa || !window.atob || !("btoa" in window) || !("atob" in window) || !("".trim)) {
+               alert("Please upgrade your browser for viewing this page.");
+               return false;
+            }
+            return true;
+         };
+         var renderPageContents = function() {
+            if (str.indexOf(btoa("kcak11")) === 0) {
+               if (featureCheck()) {
+                  info = atob(decodeURIComponent(str.split(btoa("kcak11"))[1]));
+               } else {
+                  renderPage = false;
+               }
+            } else {
+               str = str.split("+").join(" ");
+               info = decodeURIComponent(str);
+            }
+            if (renderPage) {
+               document.open("text/html", "replace");
+               document.write(info);
+               document.close();
+            }
+         };
+         var handlePageGeneration = function() {
+            if (!featureCheck()) {
+               return;
+            }
+            var data = document.querySelector(".creator .userInput").value;
+            if (!data) {
+               alert("Please input the data.");
+               return;
+            }
+            var suffix = window.location.pathname.indexOf(".html") > -1 ? "" : "/";
+            var linkData = btoa("kcak11") + btoa(data);
+            var linkHref = window.location.protocol + "//" + window.location.host + window.location.pathname + suffix + "?" + encodeURIComponent(linkData);
+            var link = document.createElement("a");
+            link.className = "generatedPage";
+            link.innerHTML = "View Generated Page";
+            link.setAttribute("target", "_blank");
+            link.setAttribute("href", linkHref);
+            document.querySelector(".creator").appendChild(link);
+         };
+         if (str) {
+            if (str.indexOf("?") === 0) {
+               str = str.substr(1);
+            }
+            if (str === "create") {
+               var creator = document.createElement("div");
+               creator.className = "creator";
+               bdy.appendChild(creator);
+               var hdr = document.createElement("h1");
+               hdr.innerHTML = "Dynamic Page Creator";
+               creator.appendChild(hdr);
+               var inp = document.createElement("textarea");
+               inp.className = "userInput";
+               creator.appendChild(inp);
+               var cta = document.createElement("button");
+               cta.className = "createPageCTA";
+               cta.innerHTML = "Create Dynamic Page";
+               cta.onclick = handlePageGeneration;
+               creator.appendChild(cta);
+            } else {
+               renderPageContents(str);
+            }
+         }
       }());
       //]]>
    </script>
