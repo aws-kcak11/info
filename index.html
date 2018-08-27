@@ -102,9 +102,13 @@
                alert("Please input the data.");
                return;
             }
-            var suffix = window.location.pathname.indexOf(".html") > -1 ? "" : "/";
+            var pathname = window.location.pathname;
+            var suffix = "";
+            if (pathname.indexOf(".html") < 0 && pathname.charAt(pathname.length - 1) !== "/") {
+               suffix = "/";
+            }
             var linkData = btoa("kcak11") + btoa(data);
-            var linkHref = window.location.protocol + "//" + window.location.host + window.location.pathname + suffix + "?" + encodeURIComponent(linkData);
+            var linkHref = window.location.protocol + "//" + window.location.host + pathname + suffix + "?" + encodeURIComponent(linkData);
             var link = document.createElement("a");
             link.className = "generatedPage";
             link.innerHTML = "View Generated Page";
