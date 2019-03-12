@@ -57,11 +57,15 @@
             .creator .optLabel {
                 margin-left: 5px;
                 height: 20px;
+                position: relative;
             }
 
             html:not(._ms_browser) .creator .optLabel {
-                position: relative;
                 top: -2px;
+            }
+
+            html._ms_browser .creator .optLabel {
+                top: -4px;
             }
 
             .creator .createPageCTA {
